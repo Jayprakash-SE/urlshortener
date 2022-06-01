@@ -1,13 +1,16 @@
 from flask import Flask, render_template, request, session, redirect, url_for
+from flask_session import Session
 from os import urandom
 
 from db import checkEmail, checkLogin, createUser, \
     createKey, getDomain, getUserDetail, getDomainsByUser
 
 app = Flask(__name__)
-
+app.config["SESSION_TYPE"] = "filesystem"
+app.config["SESSION_FILE_DIR"] = "sessions"
 app.config["SECRET_KEY"] = urandom(24)
 
+Session(app)
 
 @app.route("/")
 def home():
